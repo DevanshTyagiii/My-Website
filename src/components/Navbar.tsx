@@ -20,23 +20,7 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const handleScroll = (id: string) => {
-    const element = document.getElementById(id);
-    if (!element) return;
 
-    const offset = 80; // Navbar height + padding
-    const bodyRect = document.body.getBoundingClientRect().top;
-    const elementRect = element.getBoundingClientRect().top;
-    const elementPosition = elementRect - bodyRect;
-    const offsetPosition = elementPosition - offset;
-
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: "smooth"
-    });
-
-    setMobileOpen(false);
-  };
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${scrolled ? "bg-background/80 backdrop-blur-lg border-b border-border" : "bg-transparent"
@@ -52,18 +36,18 @@ const Navbar = () => {
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((l) => (
-            <button
+            <a
               key={l.label}
-              onClick={() => handleScroll(l.href.replace('#', ''))}
+              href={l.href}
               className="text-sm text-muted-foreground hover:text-foreground transition-colors bg-transparent border-none cursor-pointer"
             >
               {l.label}
-            </button>
+            </a>
           ))}
           <Button
             variant="hero"
             size="sm"
-            onClick={() => handleScroll('contact')}
+            onClick={() => window.location.href = "#contact"}
           >
             Get in Touch
           </Button>
@@ -86,19 +70,23 @@ const Navbar = () => {
           >
             <div className="px-6 py-6 space-y-4">
               {navLinks.map((l) => (
-                <button
+                <a
                   key={l.label}
-                  onClick={() => handleScroll(l.href.replace('#', ''))}
-                  className="block text-sm text-muted-foreground hover:text-foreground transition-colors bg-transparent border-none cursor-pointer text-left w-full"
+                  href={l.href}
+                  onClick={() => setMobileOpen(false)}
+                  className="block text-sm text-muted-foreground hover:text-foreground transition-colors bg-transparent border-none cursor-pointer text-left w-full py-2"
                 >
                   {l.label}
-                </button>
+                </a>
               ))}
               <Button
                 variant="hero"
                 size="sm"
                 className="w-full"
-                onClick={() => handleScroll('contact')}
+                onClick={() => {
+                  window.location.href = "#contact";
+                  setMobileOpen(false);
+                }}
               >
                 Get in Touch
               </Button>
