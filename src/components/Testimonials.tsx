@@ -40,7 +40,7 @@ const Testimonials = () => {
           {testimonials.map((t, i) => (
             <motion.div
               key={t.name}
-              className="p-8 rounded-xl bg-card border border-border"
+              className="fix-safari-flicker p-8 rounded-xl bg-card border border-border"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}

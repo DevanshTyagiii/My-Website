@@ -44,7 +44,7 @@ const Portfolio = () => {
           {projects.map((project, i) => (
             <motion.div
               key={project.title}
-              className="group rounded-xl overflow-hidden bg-card border border-border hover:border-gold/30 transition-all duration-500"
+              className="fix-safari-flicker group rounded-xl overflow-hidden bg-card border border-border hover:border-gold/30 transition-all duration-500"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}

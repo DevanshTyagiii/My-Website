@@ -16,6 +16,7 @@ const WhyUs = () => {
       <div className="max-w-5xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <motion.div
+            className="fix-safari-flicker"
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -27,13 +28,13 @@ const WhyUs = () => {
               <span className="text-gradient-gold">Built to Last.</span>
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              We don't build generic websites. Every pixel serves a purpose — 
+              We don't build generic websites. Every pixel serves a purpose —
               to make your business look credible and bring in customers.
             </p>
           </motion.div>
 
           <motion.div
-            className="space-y-5"
+            className="fix-safari-flicker space-y-5"
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -42,7 +43,7 @@ const WhyUs = () => {
             {reasons.map((reason, i) => (
               <motion.div
                 key={reason}
-                className="flex items-center gap-4 p-4 rounded-lg bg-card/50 border border-border"
+                className="fix-safari-flicker flex items-center gap-4 p-4 rounded-lg bg-card/50 border border-border"
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
