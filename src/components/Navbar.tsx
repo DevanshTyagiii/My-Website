@@ -63,7 +63,7 @@ const Navbar = () => {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            className="md:hidden bg-background/95 backdrop-blur-lg border-b border-border fixed top-16 left-0 right-0 z-[99]"
+            className="md:hidden bg-background/95 backdrop-blur-lg border-b border-border absolute top-16 left-0 right-0 z-[99]"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
