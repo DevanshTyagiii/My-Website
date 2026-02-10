@@ -1,0 +1,88 @@
+import { motion } from "framer-motion";
+import { ExternalLink } from "lucide-react";
+
+const projects = [
+  {
+    title: "The Brew Room",
+    type: "Modern Café Website",
+    desc: "A warm, inviting digital experience for an artisan coffee house. Designed to drive foot traffic and build loyal regulars.",
+    features: ["Online menu", "Location & hours", "Instagram integration"],
+    label: "Concept Project",
+  },
+  {
+    title: "Aura Salon",
+    type: "Luxury Salon Website",
+    desc: "Elegant, minimal design for a high-end salon. Built to attract premium clients and simplify bookings.",
+    features: ["Service catalog", "WhatsApp booking", "Client testimonials"],
+    label: "Concept Project",
+  },
+  {
+    title: "Olive & Ember",
+    type: "Boutique Restaurant Website",
+    desc: "A rich, immersive website for a fine-dining restaurant. Focused on atmosphere, trust, and reservations.",
+    features: ["Dynamic menu", "Reservation system", "Chef's story"],
+    label: "Concept Project",
+  },
+];
+
+const Portfolio = () => {
+  return (
+    <section id="work" className="section-padding bg-gradient-section">
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+        >
+          <p className="text-gold text-sm tracking-[0.2em] uppercase mb-4">Portfolio</p>
+          <h2 className="text-3xl md:text-5xl font-bold">Selected Work</h2>
+        </motion.div>
+
+        <div className="grid lg:grid-cols-3 gap-8">
+          {projects.map((project, i) => (
+            <motion.div
+              key={project.title}
+              className="group rounded-xl overflow-hidden bg-card border border-border hover:border-gold/30 transition-all duration-500"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: i * 0.15 }}
+            >
+              {/* Placeholder visual */}
+              <div className="h-48 bg-surface-light relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-gold/5 to-transparent" />
+                <div className="absolute bottom-4 left-4">
+                  <span className="text-xs tracking-[0.15em] uppercase text-gold/70 bg-background/50 px-3 py-1 rounded-full backdrop-blur-sm">
+                    {project.label}
+                  </span>
+                </div>
+                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center backdrop-blur-sm">
+                    <ExternalLink className="h-4 w-4 text-gold" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-6">
+                <p className="text-gold text-xs tracking-[0.15em] uppercase mb-2">{project.type}</p>
+                <h3 className="text-xl font-semibold mb-3">{project.title}</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed mb-4">{project.desc}</p>
+                <div className="flex flex-wrap gap-2">
+                  {project.features.map((f) => (
+                    <span key={f} className="text-xs px-3 py-1 rounded-full bg-surface-light text-muted-foreground">
+                      {f}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Portfolio;
