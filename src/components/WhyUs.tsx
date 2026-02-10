@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { Check } from "lucide-react";
+import { useRef, useState, useEffect } from "react";
 
 const reasons = [
   "Tailored designs — no templates",
@@ -10,16 +11,47 @@ const reasons = [
   "Direct communication, no middlemen",
 ];
 
+const ReasonItem = ({ reason, index }: { reason: string, index: number }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  useEffect(() => {
+    if (isInView) setHasAnimated(true);
+  }, [isInView]);
+
+  return (
+    <motion.div
+      ref={ref}
+      className="fix-safari-flicker flex items-center gap-4 p-4 rounded-lg bg-card/50 border border-border"
+      initial={{ opacity: 0, x: 20 }}
+      animate={hasAnimated ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+      transition={{ duration: 0.4, delay: 0.1 * index }}
+    >
+      <div className="w-8 h-8 rounded-full bg-gold/10 flex items-center justify-center flex-shrink-0">
+        <Check className="h-4 w-4 text-gold" />
+      </div>
+      <span className="font-medium">{reason}</span>
+    </motion.div>
+  );
+};
+
 const WhyUs = () => {
+  const leftRef = useRef(null);
+  const isLeftInView = useInView(leftRef, { once: true, margin: "-100px" });
+
+  const rightRef = useRef(null);
+  const isRightInView = useInView(rightRef, { once: true, margin: "-100px" });
+
   return (
     <section className="section-padding bg-gradient-dark">
       <div className="max-w-5xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <motion.div
+            ref={leftRef}
             className="fix-safari-flicker"
             initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            animate={isLeftInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
             transition={{ duration: 0.6 }}
           >
             <p className="text-gold text-sm tracking-[0.2em] uppercase mb-4">Why Us</p>
@@ -34,26 +66,14 @@ const WhyUs = () => {
           </motion.div>
 
           <motion.div
+            ref={rightRef}
             className="fix-safari-flicker space-y-5"
             initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            animate={isRightInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             {reasons.map((reason, i) => (
-              <motion.div
-                key={reason}
-                className="fix-safari-flicker flex items-center gap-4 p-4 rounded-lg bg-card/50 border border-border"
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: 0.1 * i }}
-              >
-                <div className="w-8 h-8 rounded-full bg-gold/10 flex items-center justify-center flex-shrink-0">
-                  <Check className="h-4 w-4 text-gold" />
-                </div>
-                <span className="font-medium">{reason}</span>
-              </motion.div>
+              <ReasonItem key={reason} reason={reason} index={i} />
             ))}
           </motion.div>
         </div>

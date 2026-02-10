@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { Star } from "lucide-react";
+import { useRef, useState, useEffect } from "react";
 
 const testimonials = [
   {
@@ -19,15 +20,49 @@ const testimonials = [
   },
 ];
 
+const TestimonialCard = ({ t, index }: { t: typeof testimonials[0], index: number }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  useEffect(() => {
+    if (isInView) setHasAnimated(true);
+  }, [isInView]);
+
+  return (
+    <motion.div
+      ref={ref}
+      className="fix-safari-flicker p-8 rounded-xl bg-card border border-border"
+      initial={{ opacity: 0, y: 20 }}
+      animate={hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+    >
+      <div className="flex gap-1 mb-4">
+        {[...Array(5)].map((_, j) => (
+          <Star key={j} className="h-4 w-4 text-gold fill-gold" />
+        ))}
+      </div>
+      <p className="text-secondary-foreground text-sm leading-relaxed mb-6">"{t.text}"</p>
+      <div>
+        <p className="font-semibold text-sm">{t.name}</p>
+        <p className="text-muted-foreground text-xs">{t.role}</p>
+      </div>
+    </motion.div>
+  );
+};
+
 const Testimonials = () => {
+  const headerRef = useRef(null);
+  const isHeaderInView = useInView(headerRef, { once: true, margin: "-100px" });
+
   return (
     <section className="section-padding bg-gradient-dark">
       <div className="max-w-6xl mx-auto">
         <motion.div
+          ref={headerRef}
           className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          animate={isHeaderInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6 }}
         >
           <p className="text-gold text-sm tracking-[0.2em] uppercase mb-4">Testimonials</p>
@@ -38,25 +73,7 @@ const Testimonials = () => {
 
         <div className="grid md:grid-cols-3 gap-8">
           {testimonials.map((t, i) => (
-            <motion.div
-              key={t.name}
-              className="fix-safari-flicker p-8 rounded-xl bg-card border border-border"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-            >
-              <div className="flex gap-1 mb-4">
-                {[...Array(5)].map((_, j) => (
-                  <Star key={j} className="h-4 w-4 text-gold fill-gold" />
-                ))}
-              </div>
-              <p className="text-secondary-foreground text-sm leading-relaxed mb-6">"{t.text}"</p>
-              <div>
-                <p className="font-semibold text-sm">{t.name}</p>
-                <p className="text-muted-foreground text-xs">{t.role}</p>
-              </div>
-            </motion.div>
+            <TestimonialCard key={t.name} t={t} index={i} />
           ))}
         </div>
       </div>

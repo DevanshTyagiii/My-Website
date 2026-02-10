@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { ExternalLink } from "lucide-react";
+import { useRef, useState, useEffect } from "react";
 
 const projects = [
   {
@@ -25,15 +26,66 @@ const projects = [
   },
 ];
 
+const ProjectCard = ({ project, index }: { project: typeof projects[0], index: number }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  useEffect(() => {
+    if (isInView) setHasAnimated(true);
+  }, [isInView]);
+
+  return (
+    <motion.div
+      ref={ref}
+      className="fix-safari-flicker group rounded-xl overflow-hidden bg-card border border-border hover:border-gold/30 transition-all duration-500"
+      initial={{ opacity: 0, y: 30 }}
+      animate={hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+      transition={{ duration: 0.5, delay: index * 0.15 }}
+    >
+      {/* Placeholder visual */}
+      <div className="h-48 bg-surface-light relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-gold/5 to-transparent" />
+        <div className="absolute bottom-4 left-4">
+          <span className="text-xs tracking-[0.15em] uppercase text-gold/70 bg-background/50 px-3 py-1 rounded-full backdrop-blur-sm">
+            {project.label}
+          </span>
+        </div>
+        <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div className="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center backdrop-blur-sm">
+            <ExternalLink className="h-4 w-4 text-gold" />
+          </div>
+        </div>
+      </div>
+
+      <div className="p-6">
+        <p className="text-gold text-xs tracking-[0.15em] uppercase mb-2">{project.type}</p>
+        <h3 className="text-xl font-semibold mb-3">{project.title}</h3>
+        <p className="text-muted-foreground text-sm leading-relaxed mb-4">{project.desc}</p>
+        <div className="flex flex-wrap gap-2">
+          {project.features.map((f) => (
+            <span key={f} className="text-xs px-3 py-1 rounded-full bg-surface-light text-muted-foreground">
+              {f}
+            </span>
+          ))}
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 const Portfolio = () => {
+  const headerRef = useRef(null);
+  const isHeaderInView = useInView(headerRef, { once: true, margin: "-100px" });
+
   return (
     <section id="work" className="section-padding bg-gradient-section">
       <div className="max-w-6xl mx-auto">
         <motion.div
+          ref={headerRef}
           className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          animate={isHeaderInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6 }}
         >
           <p className="text-gold text-sm tracking-[0.2em] uppercase mb-4">Portfolio</p>
@@ -42,42 +94,7 @@ const Portfolio = () => {
 
         <div className="grid lg:grid-cols-3 gap-8">
           {projects.map((project, i) => (
-            <motion.div
-              key={project.title}
-              className="fix-safari-flicker group rounded-xl overflow-hidden bg-card border border-border hover:border-gold/30 transition-all duration-500"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: i * 0.15 }}
-            >
-              {/* Placeholder visual */}
-              <div className="h-48 bg-surface-light relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-gold/5 to-transparent" />
-                <div className="absolute bottom-4 left-4">
-                  <span className="text-xs tracking-[0.15em] uppercase text-gold/70 bg-background/50 px-3 py-1 rounded-full backdrop-blur-sm">
-                    {project.label}
-                  </span>
-                </div>
-                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center backdrop-blur-sm">
-                    <ExternalLink className="h-4 w-4 text-gold" />
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-6">
-                <p className="text-gold text-xs tracking-[0.15em] uppercase mb-2">{project.type}</p>
-                <h3 className="text-xl font-semibold mb-3">{project.title}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed mb-4">{project.desc}</p>
-                <div className="flex flex-wrap gap-2">
-                  {project.features.map((f) => (
-                    <span key={f} className="text-xs px-3 py-1 rounded-full bg-surface-light text-muted-foreground">
-                      {f}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
+            <ProjectCard key={project.title} project={project} index={i} />
           ))}
         </div>
       </div>
