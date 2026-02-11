@@ -30,7 +30,11 @@ const Footer = () => {
     setErrorMessage("");
 
     try {
-      const response = await fetch("https://my-website-backend-n7l8.onrender.com/api/contact", {
+      const API_URL = import.meta.env.DEV
+        ? "http://localhost:5000/api/contact"
+        : "https://my-website-backend-n7l8.onrender.com/api/contact";
+
+      const response = await fetch(API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
