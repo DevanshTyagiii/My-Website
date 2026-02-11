@@ -26,8 +26,8 @@ const Footer = () => {
               Ready to <span className="text-gradient-gold">Elevate Your Brand?</span>
             </h2>
             <p className="text-muted-foreground text-lg mb-8 max-w-xl mx-auto">
-              Let's build a website that doesn't just look good — it works.
-              Start with a free consultation today.
+              Let’s build a website that does more than impress. It performs.
+              Start with a strategic consultation and take the first step toward measurable growth.
             </p>
             <div className="flex justify-center">
               <a href="mailto:devansh.studio.work@gmail.com?subject=Project%20Inquiry" className="flex items-center gap-3 text-foreground hover:text-gold transition-colors bg-surface-light px-6 py-3 rounded-full border border-border/50 hover:border-gold/50">
@@ -41,7 +41,7 @@ const Footer = () => {
         <div className="mt-20 pt-8 border-t border-border/30 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
           <p>© {new Date().getFullYear()} Devansh Digital Studio. All rights reserved.</p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-gold transition-colors"><Instagram className="h-5 w-5" /></a>
+            <a href="https://instagram.com/devansh.studioo" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors"><Instagram className="h-5 w-5" /></a>
             <a href="#" className="hover:text-gold transition-colors"><Linkedin className="h-5 w-5" /></a>
             <a href="#" className="hover:text-gold transition-colors"><Twitter className="h-5 w-5" /></a>
           </div>

@@ -60,8 +60,10 @@ const WhyUs = () => {
               <span className="text-gradient-gold">Built to Last.</span>
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              We don't build generic websites. Every pixel serves a purpose —
-              to make your business look credible and bring in customers.
+              We design websites that look exceptional and perform with precision.
+              Every detail is crafted to elevate your brand, build credibility,
+              and turn attention into measurable growth. This is not decoration.
+              It is digital infrastructure for serious business.
             </p>
           </motion.div>
 
