@@ -1,5 +1,5 @@
 import { motion, useInView } from "framer-motion";
-import { Mail, Phone, Instagram, Linkedin, Twitter } from "lucide-react";
+import { Mail, Instagram, Linkedin, Twitter } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 
 const Footer = () => {
@@ -30,17 +30,11 @@ const Footer = () => {
               Start with a free consultation today.
             </p>
             <div className="space-y-4">
-              <a href="mailto:hello@devansh.studio" className="flex items-center gap-3 text-foreground hover:text-gold transition-colors">
+              <a href="mailto:devansh.studio.work@gmail.com" className="flex items-center gap-3 text-foreground hover:text-gold transition-colors">
                 <div className="w-10 h-10 rounded-full bg-surface-light flex items-center justify-center">
                   <Mail className="h-5 w-5" />
                 </div>
-                hello@devansh.studio
-              </a>
-              <a href="tel:+919876543210" className="flex items-center gap-3 text-foreground hover:text-gold transition-colors">
-                <div className="w-10 h-10 rounded-full bg-surface-light flex items-center justify-center">
-                  <Phone className="h-5 w-5" />
-                </div>
-                +91 98765 43210
+                devansh.studio.work@gmail.com
               </a>
             </div>
           </motion.div>
