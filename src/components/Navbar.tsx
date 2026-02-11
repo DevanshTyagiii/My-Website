@@ -20,14 +20,35 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>, href: string) => {
+    e.preventDefault();
+    setMobileOpen(false);
 
+    if (href === "#") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    const element = document.querySelector(href);
+    if (element) {
+      // Offset for fixed header
+      const headerOffset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+    }
+  };
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${scrolled ? "bg-background/80 backdrop-blur-lg border-b border-border" : "bg-transparent"
       }`}>
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         <button
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          onClick={(e) => handleScroll(e, "#")}
           className="text-sm font-bold tracking-[0.1em] uppercase bg-transparent border-none cursor-pointer p-0"
         >
           Devansh<span className="text-gold">.</span>Studio
@@ -39,6 +60,7 @@ const Navbar = () => {
             <a
               key={l.label}
               href={l.href}
+              onClick={(e) => handleScroll(e, l.href)}
               className="text-sm text-muted-foreground hover:text-foreground transition-colors bg-transparent border-none cursor-pointer"
             >
               {l.label}
@@ -47,7 +69,7 @@ const Navbar = () => {
           <Button
             variant="hero"
             size="sm"
-            onClick={() => window.location.href = "#contact"}
+            onClick={(e) => handleScroll(e, "#contact")}
           >
             Get in Touch
           </Button>
@@ -73,7 +95,7 @@ const Navbar = () => {
                 <a
                   key={l.label}
                   href={l.href}
-                  onClick={() => setMobileOpen(false)}
+                  onClick={(e) => handleScroll(e, l.href)}
                   className="block text-sm text-muted-foreground hover:text-foreground transition-colors bg-transparent border-none cursor-pointer text-left w-full py-2"
                 >
                   {l.label}
@@ -83,9 +105,8 @@ const Navbar = () => {
                 variant="hero"
                 size="sm"
                 className="w-full"
-                onClick={() => {
-                  window.location.href = "#contact";
-                  setMobileOpen(false);
+                onClick={(e) => {
+                  handleScroll(e, "#contact");
                 }}
               >
                 Get in Touch

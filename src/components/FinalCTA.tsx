@@ -52,7 +52,7 @@ const FinalCTA = () => {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-gold text-sm tracking-[0.2em] uppercase mb-4">Ready?</p>
+          <p className="text-gold font-bold text-sm tracking-[0.2em] uppercase mb-4">Ready?</p>
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
             Let's Build Something{" "}
             <span className="text-gradient-gold">Worth Remembering.</span>

@@ -81,7 +81,7 @@ const Pricing = () => {
           animate={isHeaderInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-gold text-sm tracking-[0.2em] uppercase mb-4">Pricing</p>
+          <p className="text-gold font-bold text-sm tracking-[0.2em] uppercase mb-4">Pricing</p>
           <h2 className="text-3xl md:text-5xl font-bold mb-4">
             Transparent Pricing. <span className="text-gradient-gold">Premium Quality.</span>
           </h2>

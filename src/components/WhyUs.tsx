@@ -54,7 +54,7 @@ const WhyUs = () => {
             animate={isLeftInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
             transition={{ duration: 0.6 }}
           >
-            <p className="text-gold text-sm tracking-[0.2em] uppercase mb-4">Why Us</p>
+            <p className="text-gold font-bold text-sm tracking-[0.2em] uppercase mb-4">Why Us</p>
             <h2 className="text-3xl md:text-5xl font-bold mb-4">
               Designed to Convert.{" "}
               <span className="text-gradient-gold">Built to Last.</span>
