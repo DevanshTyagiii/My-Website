@@ -35,7 +35,7 @@ const Footer = () => {
       : "https://my-website-backend-n7l8.onrender.com/api/contact";
 
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+    const timeoutId = setTimeout(() => controller.abort(), 60000); // 60 second timeout for Render cold start
 
     try {
       const response = await fetch(API_URL, {
