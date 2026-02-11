@@ -39,7 +39,7 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.15, ease: "easeOut" }}
         >
           Premium Websites Built to{" "}
-          <span className="text-gradient-gold">Grow Local Businesses</span>
+          <span className="text-gradient-gold">Grow Businesses</span>
         </motion.h1>
 
         <motion.p
