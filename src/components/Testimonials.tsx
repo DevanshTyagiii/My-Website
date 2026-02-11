@@ -6,17 +6,17 @@ const testimonials = [
   {
     name: "Priya Mehta",
     role: "Owner, Bloom Café",
-    text: "Devansh delivered exactly what we needed — a website that looks premium and actually brings in customers. Best decision we made.",
+    text: "Honestly, I didn't think a website would change much for a local spot, but I was wrong. Customers actually tell us they found us through Google and loved the vibe online. It really works.",
   },
   {
     name: "Arjun Kapoor",
     role: "Founder, Luxe Salon",
-    text: "The speed, the quality, the attention to detail. Our bookings went up within the first week. Highly recommend.",
+    text: "I usually don't write reviews, but the work here was exceptional. He didn't just build what I asked for; he actually improved on my ideas. The new booking flow saves us hours every week.",
   },
   {
     name: "Sneha Iyer",
     role: "Manager, Olive & Ember",
-    text: "Professional, fast, and zero hassle. The website speaks for itself — our guests love it.",
+    text: "Super fast and actually listens. We had a tight deadline for our launch, and Devansh delivered two days early. The site looks better than our competitors', which is exactly what we wanted.",
   },
 ];
 
