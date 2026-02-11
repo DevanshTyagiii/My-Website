@@ -5,18 +5,29 @@ import { ArrowRight, MessageCircle } from "lucide-react";
 
 const FinalCTA = () => {
   const [isAnimating, setIsAnimating] = useState(false);
-  const [particles, setParticles] = useState<Array<{ id: number; x: number; y: number }>>([]);
+  const [particles, setParticles] = useState<Array<{ id: number; x: number; y: number; tx: number; ty: number }>>([]);
 
   const handleTakeAction = () => {
     if (isAnimating) return;
 
     setIsAnimating(true);
 
-    // Generate particles
+    // Determine direction based on screen width (mobile < 640px usually stacks vertically)
+    // Adjust breakpoint to match your CSS grid/flex wrapping point
+    const isMobile = window.innerWidth < 640;
+
+    // Generate particles with specific targets
     const newParticles = Array.from({ length: 25 }, (_, i) => ({
       id: i,
       x: 0,
       y: 0,
+      // Target Coordinates
+      tx: isMobile
+        ? Math.random() * 100 - 50       // Mobile: Spread horizontally slightly
+        : Math.random() * 200 - 100 + 150, // Desktop: Move right towards WhatsApp
+      ty: isMobile
+        ? Math.random() * 100 + 50       // Mobile: Move DOWN towards WhatsApp
+        : Math.random() * 100 - 50,      // Desktop: Spread vertically slightly
     }));
     setParticles(newParticles);
 
@@ -63,8 +74,8 @@ const FinalCTA = () => {
                     scale: 1
                   }}
                   animate={{
-                    x: Math.random() * 200 - 100 + 150, // Move toward right (WhatsApp button)
-                    y: Math.random() * 100 - 50,
+                    x: particle.tx, // Use calculated target x
+                    y: particle.ty, // Use calculated target y
                     opacity: 0,
                     scale: 0.5
                   }}
