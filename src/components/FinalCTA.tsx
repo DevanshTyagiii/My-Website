@@ -39,7 +39,7 @@ const FinalCTA = () => {
   };
 
   return (
-    <section className="section-padding bg-gradient-section relative overflow-hidden">
+    <section id="final-cta" className="section-padding bg-gradient-section relative overflow-hidden">
       {/* Ambient glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full opacity-[0.04]" style={{
         background: "radial-gradient(circle, hsl(42 45% 58%), transparent 70%)"

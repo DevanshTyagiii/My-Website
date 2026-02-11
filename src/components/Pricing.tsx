@@ -59,7 +59,7 @@ const PlanCard = ({ plan, index }: { plan: typeof plans[0], index: number }) => 
       <Button
         variant={plan.featured ? "hero" : "heroOutline"}
         className="w-full py-5"
-        onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+        onClick={() => document.getElementById('final-cta')?.scrollIntoView({ behavior: 'smooth' })}
       >
         Get Started <ArrowRight className="ml-1 h-4 w-4" />
       </Button>
