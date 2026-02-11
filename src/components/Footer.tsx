@@ -29,18 +29,24 @@ const Footer = () => {
     setStatus("loading");
     setErrorMessage("");
 
-    try {
-      const API_URL = import.meta.env.DEV
-        ? "http://localhost:5000/api/contact"
-        : "https://my-website-backend-n7l8.onrender.com/api/contact";
 
+    const API_URL = import.meta.env.DEV
+      ? "http://localhost:5000/api/contact"
+      : "https://my-website-backend-n7l8.onrender.com/api/contact";
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
+    try {
       const response = await fetch(API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
+        signal: controller.signal
       });
+      clearTimeout(timeoutId);
 
       const data = await response.json();
 
@@ -50,12 +56,18 @@ const Footer = () => {
         setTimeout(() => setStatus("idle"), 5000);
       } else {
         setStatus("error");
-        setErrorMessage(data.error || "Something went wrong. Please try again.");
+        setErrorMessage(data.error || "Server error. Please try again.");
+        console.error("Server responded with error:", data);
       }
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      clearTimeout(timeoutId);
+      console.error("Fetch error:", error);
       setStatus("error");
-      setErrorMessage("Failed to send message. Please check your connection.");
+      if (error.name === 'AbortError') {
+        setErrorMessage("Request timed out. Server might be sleeping (Render) or not running (Local).");
+      } else {
+        setErrorMessage(`Failed to send: ${error.message || "Connection error"}`);
+      }
     }
   };
 
