@@ -1,5 +1,5 @@
 import { motion, useInView } from "framer-motion";
-import { Mail, Instagram, Linkedin, Twitter } from "lucide-react";
+import { Mail, Instagram } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 
 const Footer = () => {
@@ -40,11 +40,7 @@ const Footer = () => {
 
         <div className="mt-20 pt-8 border-t border-border/30 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
           <p>© {new Date().getFullYear()} Devansh Digital Studio. All rights reserved.</p>
-          <div className="flex gap-6">
-            <a href="https://instagram.com/devansh.studioo" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors"><Instagram className="h-5 w-5" /></a>
-            <a href="#" className="hover:text-gold transition-colors"><Linkedin className="h-5 w-5" /></a>
-            <a href="#" className="hover:text-gold transition-colors"><Twitter className="h-5 w-5" /></a>
-          </div>
+          <a href="https://instagram.com/devansh.studioo" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors"><Instagram className="h-5 w-5" /></a>
         </div>
       </div>
     </footer>
@@ -52,3 +48,4 @@ const Footer = () => {
 };
 
 export default Footer;
+

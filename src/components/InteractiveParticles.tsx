@@ -12,7 +12,7 @@ const InteractiveParticles = () => {
 
         let particles: Particle[] = [];
         let animationFrameId: number;
-        let mouse = { x: -1000, y: -1000, radius: 150 };
+        const mouse = { x: -1000, y: -1000, radius: 150 };
 
         const resizeCanvas = () => {
             canvas.width = window.innerWidth;
