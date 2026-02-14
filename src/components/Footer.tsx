@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import MagneticWrapper from "./ui/MagneticWrapper";
 import ContactForm from "./ContactForm";
 
-const Footer = () => {
+const Footer = ({ hideCTA = false }: { hideCTA?: boolean }) => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [hasAnimated, setHasAnimated] = useState(false);
@@ -38,26 +38,28 @@ const Footer = () => {
       />
 
       <div className="max-w-6xl mx-auto relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            ref={ref}
-            className="fix-safari-flicker"
-            initial={{ opacity: 0, y: 30 }}
-            animate={hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-4xl md:text-6xl font-bold mb-8 tracking-tight">
-              Ready to <span className="text-gradient-gold">Elevate Your Brand?</span>
-            </h2>
-            <p className="text-muted-foreground text-lg md:text-xl mb-12 max-w-2xl mx-auto leading-relaxed">
-              Let’s build a website that does more than impress. It performs.
-              Start with a strategic consultation and take the first step toward measurable growth.
-            </p>
-            <div className="flex justify-center w-full">
-              <ContactForm />
-            </div>
-          </motion.div>
-        </div>
+        {!hideCTA && (
+          <div className="max-w-4xl mx-auto text-center">
+            <motion.div
+              ref={ref}
+              className="fix-safari-flicker"
+              initial={{ opacity: 0, y: 30 }}
+              animate={hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="text-4xl md:text-6xl font-bold mb-8 tracking-tight">
+                Ready to <span className="text-gradient-gold">Elevate Your Brand?</span>
+              </h2>
+              <p className="text-muted-foreground text-lg md:text-xl mb-12 max-w-2xl mx-auto leading-relaxed">
+                Let’s build a website that does more than impress. It performs.
+                Start with a strategic consultation and take the first step toward measurable growth.
+              </p>
+              <div className="flex justify-center w-full">
+                <ContactForm />
+              </div>
+            </motion.div>
+          </div>
+        )}
 
         <div className="mt-24 pt-8 border-t border-border/30 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-muted-foreground">
           <p>© {new Date().getFullYear()} Devansh Digital Studio. All rights reserved.</p>

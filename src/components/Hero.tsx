@@ -4,8 +4,10 @@ import { ArrowRight } from "lucide-react";
 import InteractiveParticles from "./InteractiveParticles";
 import MagneticWrapper from "./ui/MagneticWrapper";
 import GlitchText from "./ui/GlitchText";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
   return (
     <section className="relative min-h-[100dvh] flex items-center justify-center bg-gradient-dark overflow-hidden">
       <InteractiveParticles />
@@ -66,7 +68,7 @@ const Hero = () => {
               variant="hero"
               size="lg"
               className="text-base px-8 py-6 w-full sm:w-auto relative group overflow-hidden"
-              onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => navigate('/contact')}
             >
               <span className="relative z-10 flex items-center justify-center">
                 Get a Website <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform" />
@@ -81,7 +83,7 @@ const Hero = () => {
               variant="heroOutline"
               size="lg"
               className="text-base px-8 py-6 w-full sm:w-auto"
-              onClick={() => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => navigate('/work')}
             >
               View Work
             </Button>

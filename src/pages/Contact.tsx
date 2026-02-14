@@ -23,7 +23,7 @@ const Contact = () => {
                 </motion.div>
                 <ContactForm />
             </div>
-            <Footer />
+            <Footer hideCTA={true} />
         </div>
     );
 };
