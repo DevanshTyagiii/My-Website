@@ -1,5 +1,6 @@
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useRef, ReactNode } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface MagneticWrapperProps {
     children: ReactNode;
@@ -9,6 +10,7 @@ interface MagneticWrapperProps {
 
 const MagneticWrapper = ({ children, className = "", strength = 0.5 }: MagneticWrapperProps) => {
     const ref = useRef<HTMLDivElement>(null);
+    const isMobile = useIsMobile();
 
     const x = useMotionValue(0);
     const y = useMotionValue(0);
@@ -18,7 +20,7 @@ const MagneticWrapper = ({ children, className = "", strength = 0.5 }: MagneticW
     const springY = useSpring(y, { stiffness: 150, damping: 15, mass: 0.1 });
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (!ref.current) return;
+        if (!ref.current || isMobile) return;
 
         const { clientX, clientY } = e;
         const { left, top, width, height } = ref.current.getBoundingClientRect();
@@ -37,6 +39,10 @@ const MagneticWrapper = ({ children, className = "", strength = 0.5 }: MagneticW
         x.set(0);
         y.set(0);
     };
+
+    if (isMobile) {
+        return <div className={className}>{children}</div>;
+    }
 
     return (
         <motion.div

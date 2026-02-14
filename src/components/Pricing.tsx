@@ -117,7 +117,7 @@ const PlanCard = ({ plan, index }: { plan: typeof plans[0], index: number }) => 
 };
 
 const Pricing = () => {
-  const headerRef = useRef(null);
+  const headerRef = useRef<HTMLDivElement>(null);
   const isHeaderInView = useInView(headerRef, { once: true, margin: "-100px" });
 
   return (

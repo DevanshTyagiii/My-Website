@@ -89,7 +89,7 @@ const TestimonialCard = ({ t, index }: { t: typeof testimonials[0], index: numbe
 };
 
 const Testimonials = () => {
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start end", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], [0, -50]);
 

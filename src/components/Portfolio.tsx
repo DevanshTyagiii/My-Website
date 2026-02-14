@@ -125,7 +125,7 @@ const ProjectCard3D = ({ project, index }: { project: typeof projects[0], index:
 };
 
 const Portfolio = () => {
-  const headerRef = useRef(null);
+  const headerRef = useRef<HTMLDivElement>(null);
   const isHeaderInView = useInView(headerRef, { once: true, margin: "-100px" });
 
   return (

@@ -1,4 +1,4 @@
-import { motion, useInView, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, useInView, useMotionValue, useSpring, useTransform, Variants } from "framer-motion";
 import { Palette, Layout, Coffee, MessageCircle, Zap, Rocket } from "lucide-react";
 import { useRef } from "react";
 
@@ -58,7 +58,7 @@ const ServiceCard3D = ({ service, index }: { service: typeof services[0], index:
   };
 
   // Staggered Entrance Animation Variants
-  const variants = {
+  const variants: Variants = {
     hidden: { opacity: 0, y: 100, scale: 0.8, rotateX: -30 },
     visible: (i: number) => ({
       opacity: 1,
@@ -137,7 +137,7 @@ const ServiceCard3D = ({ service, index }: { service: typeof services[0], index:
 };
 
 const Services = () => {
-  const headerRef = useRef(null);
+  const headerRef = useRef<HTMLDivElement>(null);
   const isHeaderInView = useInView(headerRef, { once: true, margin: "-100px" });
 
   return (
