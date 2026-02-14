@@ -7,7 +7,7 @@ import { lazy, Suspense, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import IntroAnimation from "./components/IntroAnimation";
 // Lazy load pages for performance
-const Index = lazy(() => import("./pages/Index"));
+import Index from "./pages/Index";
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 import TapEffect from "./components/TapEffect";
@@ -35,23 +35,28 @@ const App = () => {
         <AnimatePresence>
           {showIntro && <IntroAnimation onComplete={() => setShowIntro(false)} />}
         </AnimatePresence>
-        {!showIntro && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            <BrowserRouter>
-              <Suspense fallback={<PageLoader />}>
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </Suspense>
-            </BrowserRouter>
-          </motion.div>
-        )}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: showIntro ? 0 : 1 }}
+          transition={{ duration: 0.5 }}
+          style={{
+            position: showIntro ? "fixed" : "relative",
+            top: 0,
+            left: 0,
+            width: "100%",
+            zIndex: 0,
+            pointerEvents: showIntro ? "none" : "auto"
+          }}
+        >
+          <BrowserRouter>
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+          </BrowserRouter>
+        </motion.div>
       </TooltipProvider>
     </QueryClientProvider>
   );

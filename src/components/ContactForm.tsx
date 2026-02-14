@@ -27,15 +27,26 @@ const ContactForm = () => {
                 body: JSON.stringify(formState),
             });
 
-            const data = await response.json();
-
-            if (response.ok) {
-                setStatus("success");
-                setFormState({ name: "", email: "", description: "" });
+            const contentType = response.headers.get("content-type");
+            if (contentType && contentType.indexOf("application/json") !== -1) {
+                const data = await response.json();
+                if (response.ok) {
+                    setStatus("success");
+                    setFormState({ name: "", email: "", description: "" });
+                } else {
+                    console.error("Submission failed:", data.error);
+                    setStatus("idle");
+                    alert("Failed to send message: " + (data.error || "Unknown error"));
+                }
             } else {
-                console.error("Submission failed:", data.error);
-                setStatus("idle"); // reset or show error state
-                alert("Failed to send message: " + (data.error || "Unknown error"));
+                // Not JSON (likely 404 HTML from SPA fallback)
+                console.error("Server returned non-JSON response:", response.status);
+                setStatus("idle");
+                if (response.status === 404) {
+                    alert("Error: The email system is not reachable. (404 Not Found)\n\nNote: If you are not hosted on Vercel, the backend will not work.");
+                } else {
+                    alert(`Server Error (${response.status}). Please check console for details.`);
+                }
             }
         } catch (error) {
             console.error("Network error:", error);
