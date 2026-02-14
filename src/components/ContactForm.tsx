@@ -19,12 +19,20 @@ const ContactForm = () => {
         setStatus("submitting");
 
         try {
-            const response = await fetch('/api/send-email', {
-                method: 'POST',
+            // Using FormSubmit.co for universal compatibility (works on any host + localhost)
+            const response = await fetch("https://formsubmit.co/ajax/devansh.studio.work@gmail.com", {
+                method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 },
-                body: JSON.stringify(formState),
+                body: JSON.stringify({
+                    name: formState.name,
+                    email: formState.email,
+                    message: formState.description,
+                    _subject: `New Project Inquiry from ${formState.name} (Devansh Studio)`,
+                    _template: "table" // cleaner email format
+                }),
             });
 
             const contentType = response.headers.get("content-type");
