@@ -10,6 +10,17 @@ const InteractiveParticles = () => {
         const ctx = canvas.getContext("2d");
         if (!ctx) return;
 
+        // Mobile check
+        const isMobile = window.innerWidth < 768;
+
+        // If mobile, we might want to disable entirely or drastically reduce
+        // For this implementation, we drastically reduce and remove interaction
+        if (isMobile) {
+            // Simplified static background or very few particles
+            // Let's just return early and let CSS handle a static background if needed
+            // Or render very few static particles
+        }
+
         let particles: Particle[] = [];
         let animationFrameId: number;
         const mouse = { x: -1000, y: -1000, radius: 150 };
@@ -65,30 +76,31 @@ const InteractiveParticles = () => {
                 if (this.y < 0) this.y = canvas!.height;
                 if (this.y > canvas!.height) this.y = 0;
 
-                // Mouse interaction
-                const dx = mouse.x - this.x;
-                const dy = mouse.y - this.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
+                // Mouse interaction - ONLY ON DESKTOP
+                if (!isMobile) {
+                    const dx = mouse.x - this.x;
+                    const dy = mouse.y - this.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
 
-                if (distance < mouse.radius) {
-                    const forceDirectionX = dx / distance;
-                    const forceDirectionY = dy / distance;
-                    const force = (mouse.radius - distance) / mouse.radius;
-                    const directionX = forceDirectionX * force * 3; // Strength of repulsion/attraction
-                    const directionY = forceDirectionY * force * 3;
+                    if (distance < mouse.radius) {
+                        const forceDirectionX = dx / distance;
+                        const forceDirectionY = dy / distance;
+                        const force = (mouse.radius - distance) / mouse.radius;
+                        const directionX = forceDirectionX * force * 3;
+                        const directionY = forceDirectionY * force * 3;
 
-                    // Repulsion
-                    this.x -= directionX;
-                    this.y -= directionY;
+                        this.x -= directionX;
+                        this.y -= directionY;
+                    }
                 }
             }
         }
 
         const initParticles = () => {
             particles = [];
-            const isMobile = window.innerWidth < 768;
             // Balanced density for premium feel
-            const densityFactor = isMobile ? 9000 : 6000;
+            // Drastically reduce on mobile if not disabled
+            const densityFactor = isMobile ? 20000 : 8000;
             const numberOfParticles = (canvas.width * canvas.height) / densityFactor;
 
             for (let i = 0; i < numberOfParticles; i++) {
@@ -100,7 +112,8 @@ const InteractiveParticles = () => {
 
         const connectParticles = () => {
             if (!ctx) return;
-            const maxDistance = 120; // Connection distance
+            // Reduce connection distance on mobile or disable
+            const maxDistance = isMobile ? 80 : 120;
 
             for (let a = 0; a < particles.length; a++) {
                 for (let b = a; b < particles.length; b++) {
@@ -135,29 +148,24 @@ const InteractiveParticles = () => {
         };
 
         const handleMouseMove = (e: MouseEvent) => {
+            if (isMobile) return;
             mouse.x = e.x;
             mouse.y = e.y;
         };
 
-        const handleTouchMove = (e: TouchEvent) => {
-            if (e.touches.length > 0) {
-                const touch = e.touches[0];
-                mouse.x = touch.clientX;
-                mouse.y = touch.clientY;
-            }
-        };
-
         window.addEventListener("resize", resizeCanvas);
-        window.addEventListener("mousemove", handleMouseMove);
-        window.addEventListener("touchmove", handleTouchMove, { passive: true });
+        if (!isMobile) {
+            window.addEventListener("mousemove", handleMouseMove);
+        }
 
         resizeCanvas();
         animate();
 
         return () => {
             window.removeEventListener("resize", resizeCanvas);
-            window.removeEventListener("mousemove", handleMouseMove);
-            window.removeEventListener("touchmove", handleTouchMove);
+            if (!isMobile) {
+                window.removeEventListener("mousemove", handleMouseMove);
+            }
             cancelAnimationFrame(animationFrameId);
         };
     }, []);

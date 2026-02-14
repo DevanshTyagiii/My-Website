@@ -2,17 +2,20 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const navLinks = [
-  { label: "Services", href: "#services" },
-  { label: "Work", href: "#work" },
-  { label: "Process", href: "#process" },
-  { label: "Pricing", href: "#pricing" },
+  { label: "Services", href: "/#services", type: "hash" },
+  { label: "Work", href: "/work", type: "page" },
+  { label: "Process", href: "/#process", type: "hash" },
+  { label: "Pricing", href: "/#pricing", type: "hash" },
 ];
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -20,26 +23,54 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>, href: string) => {
+  const handleNavigation = (e: React.MouseEvent<HTMLElement>, href: string) => {
     e.preventDefault();
     setMobileOpen(false);
 
-    if (href === "#") {
+    if (href === "/contact") {
+      navigate("/contact");
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
 
-    const element = document.querySelector(href);
-    if (element) {
-      // Offset for fixed header
-      const headerOffset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+    // Handle home link
+    if (href === "/") {
+      if (location.pathname === "/") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        navigate("/");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      return;
+    }
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      });
+    // Determine if it's a hash link or page link
+    if (href.startsWith("/#")) {
+      const hash = href.replace("/", ""); // extract #services
+
+      if (location.pathname === "/") {
+        // We are on home page, just scroll
+        const element = document.querySelector(hash);
+        if (element) {
+          const headerOffset = 80;
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth"
+          });
+        }
+      } else {
+        // We are on another page, navigate to home and hash
+        navigate(href);
+        // Note: Automatic scrolling to hash after navigation might need a separate effect in App/Index
+        // But for now, we rely on browser default or we can force it.
+      }
+    } else {
+      // It's a page link like /work
+      navigate(href);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -47,12 +78,13 @@ const Navbar = () => {
     <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${scrolled ? "bg-background/80 backdrop-blur-lg border-b border-border" : "bg-transparent"
       }`}>
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <button
-          onClick={(e) => handleScroll(e, "#")}
+        <a
+          href="/"
+          onClick={(e) => handleNavigation(e, "/")}
           className="text-sm font-bold tracking-[0.1em] uppercase bg-transparent border-none cursor-pointer p-0"
         >
           Devansh<span className="text-gold">.</span>Studio
-        </button>
+        </a>
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-8">
@@ -60,8 +92,11 @@ const Navbar = () => {
             <a
               key={l.label}
               href={l.href}
-              onClick={(e) => handleScroll(e, l.href)}
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors bg-transparent border-none cursor-pointer"
+              onClick={(e) => handleNavigation(e, l.href)}
+              className={`text-sm transition-colors bg-transparent border-none cursor-pointer ${location.pathname === l.href
+                ? "text-gold font-medium"
+                : "text-muted-foreground hover:text-foreground"
+                }`}
             >
               {l.label}
             </a>
@@ -69,7 +104,7 @@ const Navbar = () => {
           <Button
             variant="hero"
             size="sm"
-            onClick={(e) => handleScroll(e, "#contact")}
+            onClick={(e) => handleNavigation(e, "/contact")}
           >
             Get in Touch
           </Button>
@@ -95,8 +130,11 @@ const Navbar = () => {
                 <a
                   key={l.label}
                   href={l.href}
-                  onClick={(e) => handleScroll(e, l.href)}
-                  className="block text-sm text-muted-foreground hover:text-foreground transition-colors bg-transparent border-none cursor-pointer text-left w-full py-2"
+                  onClick={(e) => handleNavigation(e, l.href)}
+                  className={`block text-sm transition-colors bg-transparent border-none cursor-pointer text-left w-full py-2 ${location.pathname === l.href
+                    ? "text-gold font-medium"
+                    : "text-muted-foreground hover:text-foreground"
+                    }`}
                 >
                   {l.label}
                 </a>
@@ -106,7 +144,7 @@ const Navbar = () => {
                 size="sm"
                 className="w-full"
                 onClick={(e) => {
-                  handleScroll(e, "#contact");
+                  handleNavigation(e, "/contact");
                 }}
               >
                 Get in Touch

@@ -12,9 +12,10 @@ const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!@#
 const GlitchText = ({ text, className = "", speed = 50 }: GlitchTextProps) => {
     const [displayText, setDisplayText] = useState(text);
     const [isHovered, setIsHovered] = useState(false);
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     useEffect(() => {
-        if (!isHovered) {
+        if (!isHovered || prefersReducedMotion) {
             setDisplayText(text);
             return;
         }

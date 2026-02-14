@@ -134,4 +134,10 @@
   .perspective-2000 {
     perspective: 2000px;
   }
+
+  @media (hover: none) {
+    .hover\:scale-105:hover {
+      transform: none;
+    }
+  }
 }

@@ -9,6 +9,8 @@ import IntroAnimation from "./components/IntroAnimation";
 // Lazy load pages for performance
 import Index from "./pages/Index";
 const NotFound = lazy(() => import("./pages/NotFound"));
+const Work = lazy(() => import("./pages/Work"));
+const Contact = lazy(() => import("./pages/Contact"));
 
 import TapEffect from "./components/TapEffect";
 import AmbientWaveBackground from "./components/AmbientWaveBackground";
@@ -52,6 +54,8 @@ const App = () => {
             <Suspense fallback={<PageLoader />}>
               <Routes>
                 <Route path="/" element={<Index />} />
+                <Route path="/work" element={<Work />} />
+                <Route path="/contact" element={<Contact />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Suspense>
