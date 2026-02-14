@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-
 import InteractiveParticles from "./InteractiveParticles";
+import MagneticWrapper from "./ui/MagneticWrapper";
+import GlitchText from "./ui/GlitchText";
 
 const Hero = () => {
   return (
@@ -28,7 +29,7 @@ const Hero = () => {
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <p className="text-gold font-medium tracking-[0.2em] uppercase text-sm mb-6">
-            Devansh Digital Studio
+            <GlitchText text="Devansh Digital Studio" speed={30} />
           </p>
         </motion.div>
 
@@ -39,7 +40,9 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.15, ease: "easeOut" }}
         >
           Premium Websites Built to{" "}
-          <span className="text-gradient-gold">Grow Businesses</span>
+          <span className="text-gradient-gold block md:inline">
+            <GlitchText text="Grow Businesses" speed={40} />
+          </span>
         </motion.h1>
 
         <motion.p
@@ -53,33 +56,42 @@ const Hero = () => {
         </motion.p>
 
         <motion.div
-          className="fix-safari-flicker flex flex-col sm:flex-row gap-4 justify-center mb-12"
+          className="fix-safari-flicker flex flex-col sm:flex-row gap-6 justify-center mb-12 items-center"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.45, ease: "easeOut" }}
         >
-          <Button
-            variant="hero"
-            size="lg"
-            className="text-base px-8 py-6"
-            onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
-          >
-            Get a Website <ArrowRight className="ml-1 h-4 w-4" />
-          </Button>
-          <Button
-            variant="heroOutline"
-            size="lg"
-            className="text-base px-8 py-6"
-            onClick={() => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' })}
-          >
-            View Work
-          </Button>
+          <MagneticWrapper strength={0.2} className="w-full sm:w-auto">
+            <Button
+              variant="hero"
+              size="lg"
+              className="text-base px-8 py-6 w-full sm:w-auto relative group overflow-hidden"
+              onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              <span className="relative z-10 flex items-center justify-center">
+                Get a Website <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </span>
+              {/* Button Shine Effect */}
+              <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/10 to-transparent z-0" />
+            </Button>
+          </MagneticWrapper>
+
+          <MagneticWrapper strength={0.2} className="w-full sm:w-auto">
+            <Button
+              variant="heroOutline"
+              size="lg"
+              className="text-base px-8 py-6 w-full sm:w-auto"
+              onClick={() => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              View Work
+            </Button>
+          </MagneticWrapper>
         </motion.div>
 
         <motion.p
-          className="text-muted-foreground text-sm tracking-[0.15em] uppercase"
+          className="text-muted-foreground text-sm tracking-[0.15em] uppercase opacity-70"
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          animate={{ opacity: 0.7 }}
           transition={{ duration: 1, delay: 0.7 }}
         >
           Designed. Developed. Delivered with precision.
