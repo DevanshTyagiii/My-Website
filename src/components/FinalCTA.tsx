@@ -135,7 +135,7 @@ const FinalCTA = () => {
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <p className="text-gold font-bold text-sm tracking-[0.3em] uppercase mb-6 animate-pulse">Ready to Ascend?</p>
-          <h2 className="text-4xl md:text-7xl font-bold mb-6 tracking-tight leading-tight">
+          <h2 className="text-3xl md:text-7xl font-bold mb-6 tracking-tight leading-tight">
             Let's Build Something<br />
             <span className="text-gradient-gold">
               Worth Remembering.

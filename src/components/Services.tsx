@@ -32,6 +32,8 @@ const ServiceCard3D = ({ service, index }: { service: typeof services[0], index:
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
+    // Disable tilt on mobile/touch devices for better scrolling experience
+    if (window.matchMedia && !window.matchMedia("(hover: hover)").matches) return;
 
     const rect = ref.current.getBoundingClientRect();
 
