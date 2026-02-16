@@ -2,12 +2,18 @@ import Navbar from "@/components/Navbar";
 import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
 import AmbientWaveBackground from "@/components/AmbientWaveBackground";
+import { SEO } from "@/components/SEO";
 import { motion } from "framer-motion";
 
 const Contact = () => {
     return (
         <div className="min-h-screen bg-background relative">
             <AmbientWaveBackground />
+            <SEO
+                title="Contact Us"
+                description="Get in touch with Devansh Digital Studio. Ready to start your project? Fill out the form or reach out directly."
+                canonical="https://devanshstudio.online/contact"
+            />
             <Navbar />
             <div className="pt-32 pb-20 px-6 max-w-4xl mx-auto">
                 <motion.div
