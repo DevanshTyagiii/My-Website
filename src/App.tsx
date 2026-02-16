@@ -14,6 +14,7 @@ const Contact = lazy(() => import("./pages/Contact"));
 
 import TapEffect from "./components/TapEffect";
 import AmbientWaveBackground from "./components/AmbientWaveBackground";
+import Chatbot from "./components/Chatbot";
 
 const queryClient = new QueryClient();
 
@@ -60,6 +61,7 @@ const App = () => {
               </Routes>
             </Suspense>
           </BrowserRouter>
+          <Chatbot />
         </motion.div>
       </TooltipProvider>
     </QueryClientProvider>
