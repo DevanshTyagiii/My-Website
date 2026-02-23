@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const navLinks = [
@@ -16,6 +16,10 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+
+  // Scroll progress bar
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -77,6 +81,15 @@ const Navbar = () => {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${scrolled ? "bg-background/80 backdrop-blur-lg border-b border-border" : "bg-transparent"
       }`}>
+      {/* Scroll Progress Bar */}
+      <motion.div
+        className="absolute bottom-0 left-0 right-0 h-[2px] origin-left z-[101]"
+        style={{
+          scaleX,
+          background: "linear-gradient(90deg, hsl(42 50% 70%), hsl(42 45% 58%), hsl(42 40% 45%))",
+          boxShadow: "0 0 8px hsl(42 45% 58% / 0.4)",
+        }}
+      />
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         <a
           href="/"

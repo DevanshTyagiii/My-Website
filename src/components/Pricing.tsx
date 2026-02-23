@@ -2,18 +2,19 @@ import { motion, useInView, useMotionValue, useSpring, useTransform } from "fram
 import { Button } from "@/components/ui/button";
 import { Check, ArrowRight } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const plans = [
   {
     name: "Basic Premium",
-    price: "Starting from ₹9,998",
-    desc: "Perfect for new businesses that want a clean, professional online presence.",
+    price: "Affordable & Fair",
+    desc: "Perfect for new businesses that want a clean, professional online presence — at a price that makes sense.",
     features: ["Custom one-page design", "Mobile responsive", "Contact & WhatsApp integration", "Basic SEO setup", "Hosting guidance"],
     featured: false,
   },
   {
     name: "High-End Business",
-    price: "Custom pricing",
+    price: "Tailored to You",
     desc: "For established brands that demand more — multi-page, advanced features, premium finish.",
     features: ["Multi-page custom design", "Booking & form integration", "Advanced SEO & speed optimization", "Content strategy support", "Priority delivery (5–7 days)"],
     featured: true,
@@ -23,6 +24,7 @@ const plans = [
 const PlanCard = ({ plan, index }: { plan: typeof plans[0], index: number }) => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true });
+  const navigate = useNavigate();
 
   // 3D Tilt Logic
   const x = useMotionValue(0);
@@ -106,7 +108,7 @@ const PlanCard = ({ plan, index }: { plan: typeof plans[0], index: number }) => 
           <Button
             variant={plan.featured ? "hero" : "heroOutline"}
             className={`w-full py-6 text-lg rounded-xl transition-all duration-300 ${plan.featured ? "shadow-[0_0_20px_rgba(255,215,0,0.2)] hover:shadow-[0_0_30px_rgba(255,215,0,0.4)]" : "hover:bg-white/5"}`}
-            onClick={() => document.getElementById('final-cta')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => navigate('/contact')}
           >
             Get Started <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
           </Button>
